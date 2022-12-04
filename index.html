@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>József Attila</title>
+<style>
+    body {
+        font-family: "Open Sans", Arial, sans-serif;
+        color: #fff;
+        background: #060034;
+        width: 90%;
+        max-width: 650px;
+        line-height: 1.4;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        gap: 1rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #vers {
+        background-image: radial-gradient(100% 100% at 100% 0, #4175c4 0, #5468ff 100%);
+        border-radius: 6px;
+        padding: 1rem;
+        box-shadow: #2d234266 0 2px 4px, #2d23424d 0 7px 13px -3px, #3a416f80 0 -3px 0 inset;
+    }
+
+    #cim {
+        background-image: radial-gradient(100% 100% at 100% 0, #c06bf1 0, #9320ff 100%);
+        border-radius: 6px;
+        padding: 1rem;
+        box-shadow: #2d234266 0 2px 4px, #2d23424d 0 7px 13px -3px, #3a416f80 0 -3px 0 inset;
+        transition: opacity .15s;
+        will-change: opacity;
+        height: 1.3em;
+        font-weight: bold;
+    }
+
+    button {
+        color: #fff;
+        background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+        border: 0;
+        border-radius: 6px;
+        box-shadow: #2d234266 0 2px 4px, #2d23424d 0 7px 13px -3px, #3a416f80 0 -3px 0 inset;
+        cursor: pointer;
+        font-family: "JetBrains Mono", monospace;
+        height: 48px;
+        line-height: 1;
+        padding-left: 16px;
+        padding-right: 16px;
+        transition: box-shadow .15s, transform .15s;
+        will-change: box-shadow, transform;
+        font-size: 18px;
+    }
+
+    button:focus {
+        box-shadow: #3c4fe0 0 0 0 1.5px inset, #2d234266 0 2px 4px, #2d23424d 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    }
+
+    button:hover {
+        box-shadow: #2d234266 0 4px 8px, #2d23424d 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        box-shadow: #3c4fe0 0 3px 7px inset;
+        transform: translateY(2px);
+    }
+
+</style>
+
+<div id="vers"></div>
+<div id="cim"></div>
+<button id="b"></button>
+
+<script>
+    const versek = [
+        [
+            "Nem én kiáltok",
+            `Nem én kiáltok, a föld dübörög,
+            Vigyázz, vigyázz, mert megőrült a sátán,
+            Lapulj a források tiszta fenekére,
+            Símulj az üveglapba,
+            Rejtőzz a gyémántok fénye mögé,
+            Kövek alatt a bogarak közé,
+            Ó, rejtsd el magad a frissen sült kenyérben,
+            Te szegény, szegény.
+            Friss záporokkal szivárogj a földbe –
+            Hiába fürösztöd önmagadban,
+            Csak másban moshatod meg arcodat.
+            Légy egy fűszálon a pici él
+            S nagyobb leszel a világ tengelyénél.
+            Ó, gépek, madarak, lombok, csillagok!
+            Meddő anyánk gyerekért könyörög.
+            Barátom, drága, szerelmes barátom,
+            Akár borzalmas, akár nagyszerű,
+            Nem én kiáltok, a föld dübörög.`,
+        ],
+        [
+            "Tiszta szívvel",
+            `Nincsen apám, se anyám,
+            se istenem, se hazám,
+            se bölcsőm, se szemfedőm,
+            se csókom, se szeretőm.
+
+            Harmadnapja nem eszek,
+            se sokat, se keveset.
+            Húsz esztendőm hatalom,
+            húsz esztendőm eladom.
+
+            Hogyha nem kell senkinek,
+            hát az ördög veszi meg.
+            Tiszta szívvel betörök,
+            ha kell, embert is ölök.
+
+            Elfognak és felkötnek,
+            áldott földdel elfödnek
+            s halált hozó fű terem
+            gyönyörűszép szívemen.`,
+        ],
+        [
+            "Klárisok",
+            `Klárisok a nyakadon,
+            békafejek a tavon.
+            Báránygané,
+            bárányganéj a havon.
+
+            Rózsa a holdudvaron,
+            aranyöv derekadon.
+            Kenderkötél,
+            kenderkötél nyakamon.
+
+            Szoknyás lábad mozgása
+            harangnyelvek ingása,
+            folyóvízben
+            két jegenye hajlása.
+
+            Szoknyás lábad mozgása
+            harangnyelvek kongása,
+            folyóvízben
+            néma lombok hullása.`,
+        ],
+        [
+            "Téli éjszaka",
+            `Légy fegyelmezett!
+
+            A nyár
+            ellobbant már.
+            A széles, szenes göröngyök felett
+            egy kevés könnyű hamu remeg.
+            Csendes vidék.
+            A lég
+            finom üvegét
+            megkarcolja pár hegyes cserjeág.
+            Szép embertelenség. Csak egy kis darab
+            vékony ezüstrongy – valami szalag –
+            csüng keményen a bokor oldalán,
+            mert annyi mosoly, ölelés fönnakad
+            a világ ág-bogán.
+
+            A távolban a bütykös vén hegyek,
+            mint elnehezült kezek,
+            meg-megrebbenve tartogatják
+            az alkonyi tüzet,
+            a párolgó tanyát,
+            völgy kerek csöndjét, pihegő mohát.
+
+            Hazatér a földmíves. Nehéz,
+            minden tagja a földre néz.
+            Cammog vállán a megrepedt kapa,
+            vérzik a nyele, vérzik a vasa.
+            Mintha a létből ballagna haza
+            egyre nehezebb tagjaival,
+            egyre nehezebb szerszámaival.
+
+            Már fölszáll az éj, mint kéményből a füst,
+            szikrázó csillagaival.
+
+            A kék, vas éjszakát már hozza hömpölyögve
+            lassudad harangkondulás.
+            És mintha a szív örökről-örökre
+            állna s valami más,
+            talán a táj lüktetne, nem az elmulás.
+            Mintha a téli éj, a téli ég, a téli érc
+            volna harang
+            s nyelve a föld, a kovácsolt föld, a lengő nehéz.
+            S a szív a hang.
+
+            Csengés emléke száll. Az elme hallja:
+            Üllőt csapott a tél, hogy megvasalja
+            a pántos égbolt lógó ajtaját,
+            melyen a gyümölcs, a búza, fény és szalma,
+            csak dőlt a nyáron át.
+
+            Tündöklik, mint a gondolat maga,
+            a téli éjszaka.
+
+            Ezüst sötétség némasága
+            holdat lakatol a világra.
+
+            A hideg űrön holló repül át
+            s a csönd kihűl. Hallod-e, csont, a csöndet?
+            Összekoccannak a molekulák.
+
+            Milyen vitrinben csillognak
+            ily téli éjszakák?
+
+            A fagyra tőrt emel az ág
+            s a pusztaság
+            fekete sóhaja lebben – –
+            varjucsapat ing-leng a ködben.
+
+            Téli éjszaka. Benne,
+            mint külön kis téli éj,
+            egy tehervonat a síkságra ér.
+            Füstjében, tengve
+            egy ölnyi végtelenbe,
+            keringenek, kihúnynak csillagok.
+
+            A teherkocsik fagyos tetején,
+            mint kis egérke, surran át a fény,
+            a téli éjszaka fénye.
+
+            A városok fölött
+            a tél még gőzölög.
+            De villogó vágányokon,
+            városba fut a kék fagyon
+            a sárga éjszaka fénye.
+
+            A városban felüti műhelyét,
+            gyártja a kínok szúró fegyverét
+            a merev éjszaka fénye.
+
+            A város peremén,
+            mint lucskos szalma, hull a lámpafény,
+            kissé odább
+            a sarkon reszket egy zörgő kabát,
+            egy ember, üldögél,
+            összehúzódik, mint a föld, hiába,
+            rálép a lábára a tél…
+
+            Hol a homályból előhajol
+            egy rozsdalevelű fa,
+            mérem a téli éjszakát.
+            Mint birtokát
+            a tulajdonosa.`,
+        ],
+        [
+            "Óda",
+            `Itt ülök csillámló sziklafalon.
+            Az ifju nyár
+            könnyű szellője, mint egy kedves
+            vacsora melege, száll.
+            Szoktatom szívemet a csendhez.
+            Nem oly nehéz –
+            idesereglik, ami tovatűnt,
+            a fej lehajlik és lecsüng
+            a kéz.
+
+            Nézem a hegyek sörényét –
+            homlokod fényét
+            villantja minden levél.
+            Az úton senki, senki,
+            látom, hogy meglebbenti
+            szoknyád a szél.
+            És a törékeny lombok alatt
+            látom előrebiccenni hajad,
+            megrezzenni lágy emlőidet és
+            – amint elfut a Szinva-patak –
+            ím újra látom, hogy fakad
+            a kerek fehér köveken,
+            fogaidon a tündér nevetés.
+
+            Óh mennyire szeretlek téged,
+            ki szóra bírtad egyaránt
+            a szív legmélyebb üregeiben
+            cseleit szövő, fondor magányt
+            s a mindenséget.
+            Ki mint vízesés önnön robajától,
+            elválsz tőlem és halkan futsz tova,
+            míg én, életem csúcsai közt, a távol
+            közelében, zengem, sikoltom,
+            verődve földön és égbolton,
+            hogy szeretlek, te édes mostoha!
+
+            Szeretlek, mint anyját a gyermek,
+            mint mélyüket a hallgatag vermek,
+            szeretlek, mint a fényt a termek,
+            mint lángot a lélek, test a nyugalmat!
+            Szeretlek, mint élni szeretnek
+            halandók, amíg meg nem halnak.
+
+            Minden mosolyod, mozdulatod, szavad,
+            őrzöm, mint hulló tárgyakat a föld.
+            Elmémbe, mint a fémbe a savak,
+            ösztöneimmel belemartalak,
+            te kedves, szép alak,
+            lényed ott minden lényeget kitölt.
+
+            A pillanatok zörögve elvonulnak,
+            de te némán ülsz fülemben.
+            Csillagok gyúlnak és lehullnak,
+            de te megálltál szememben.
+            Ízed, miként a barlangban a csend,
+            számban kihűlve leng
+            s a vizes poháron kezed,
+            rajta a finom erezet,
+            föl-földereng.
+
+            Óh, hát miféle anyag vagyok én,
+            hogy pillantásod metsz és alakít?
+            Miféle lélek és miféle fény
+            s ámulatra méltó tünemény,
+            hogy bejárhatom a semmiség ködén
+            termékeny tested lankás tájait?
+
+            S mint megnyílt értelembe az ige,
+            alászállhatok rejtelmeibe!…
+
+            Vérköreid, miként a rózsabokrok,
+            reszketnek szüntelen.
+            Viszik az örök áramot, hogy
+            orcádon nyíljon ki a szerelem
+            s méhednek áldott gyümölcse legyen.
+            Gyomrod érzékeny talaját
+            a sok gyökerecske át meg át
+            hímezi, finom fonalát
+            csomóba szőve, bontva bogját –
+            hogy nedűid sejtje gyűjtse sok raját
+            s lombos tüdőd szép cserjéi saját
+            dicsőségüket susogják!
+
+            Az örök anyag boldogan halad
+            benned a belek alagútjain
+            és gazdag életet nyer a salak
+            a buzgó vesék forró kútjain!
+
+            Hullámzó dombok emelkednek,
+            csillagképek rezegnek benned,
+            tavak mozdulnak, munkálnak gyárak,
+            sürög millió élő állat,
+            bogár,
+            hinár,
+            a kegyetlenség és a jóság;
+            nap süt, homályló északi fény borong –
+            tartalmaidban ott bolyong
+            az öntudatlan örökkévalóság.
+
+            Mint alvadt vérdarabok,
+            úgy hullnak eléd
+            ezek a szavak.
+            A lét dadog,
+            csak a törvény a tiszta beszéd.
+            De szorgos szerveim, kik újjászülnek
+            napról napra, már fölkészülnek,
+            hogy elnémuljanak.
+
+            De addig mind kiált –
+            Kit két ezer millió embernek
+            sokaságából kiszemelnek,
+            te egyetlen, te lágy
+            bölcső, erős sír, eleven ágy,
+            fogadj magadba!…
+
+            (Milyen magas e hajnali ég!
+            Seregek csillognak érceiben.
+            Bántja szemem a nagy fényesség.
+            El vagyok veszve, azt hiszem.
+            Hallom, amint fölöttem csattog,
+            ver a szivem.)`,
+        ],
+        [
+            "A Dunánál",
+            `A rakodópart alsó kövén ültem,
+            néztem, hogy úszik el a dinnyehéj.
+            Alig hallottam, sorsomba merülten,
+            hogy fecseg a felszin, hallgat a mély.
+            Mintha szivemből folyt volna tova,
+            zavaros, bölcs és nagy volt a Duna.
+
+            Mint az izmok, ha dolgozik az ember,
+            reszel, kalapál, vályogot vet, ás,
+            úgy pattant, úgy feszült, úgy ernyedett el
+            minden hullám és minden mozdulás.
+            S mint édesanyám, ringatott, mesélt
+            s mosta a város minden szennyesét.
+
+            És elkezdett az eső cseperészni,
+            de mintha mindegy volna, el is állt.
+            És mégis, mint aki barlangból nézi
+            a hosszú esőt – néztem a határt:
+            egykedvü, örök eső módra hullt,
+            szintelenül, mi tarka volt, a mult.
+
+            A Duna csak folyt. És mint a termékeny,
+            másra gondoló anyának ölén
+            a kisgyermek, úgy játszadoztak szépen
+            és nevetgéltek a habok felém.
+            Az idő árján úgy remegtek ők,
+            mint sírköves, dülöngő temetők.
+
+            Én úgy vagyok, hogy már száz ezer éve
+            nézem, amit meglátok hirtelen.
+            Egy pillanat s kész az idő egésze,
+            mit száz ezer ős szemlélget velem.
+
+            Látom, mit ők nem láttak, mert kapáltak,
+            öltek, öleltek, tették, ami kell.
+            S ők látják azt, az anyagba leszálltak,
+            mit én nem látok, ha vallani kell.
+
+            Tudunk egymásról, mint öröm és bánat.
+            Enyém a mult és övék a jelen.
+            Verset irunk – ők fogják ceruzámat
+            s én érzem őket és emlékezem.
+
+            Anyám kún volt, az apám félig székely,
+            félig román, vagy tán egészen az.
+            Anyám szájából édes volt az étel,
+            apám szájából szép volt az igaz.
+            Mikor mozdulok, ők ölelik egymást.
+            Elszomorodom néha emiatt –
+            ez az elmulás. Ebből vagyok. „Meglásd,
+            ha majd nem leszünk!…” – megszólítanak.
+
+            Megszólítanak, mert ők én vagyok már;
+            gyenge létemre így vagyok erős,
+            ki emlékszem, hogy több vagyok a soknál,
+            mert az őssejtig vagyok minden ős –
+            az Ős vagyok, mely sokasodni foszlik:
+            apám- s anyámmá válok boldogon,
+            s apám, anyám maga is ketté oszlik
+            s én lelkes Eggyé így szaporodom!
+
+            A világ vagyok – minden, ami volt, van:
+            a sok nemzedék, mely egymásra tör.
+            A honfoglalók győznek velem holtan
+            s a meghódoltak kínja meggyötör.
+            Árpád és Zalán, Werbőczi és Dózsa –
+            török, tatár, tót, román kavarog
+            e szívben, mely e multnak már adósa
+            szelíd jövővel – mai magyarok!
+
+            …Én dolgozni akarok. Elegendő
+            harc, hogy a multat be kell vallani.
+            A Dunának, mely mult, jelen s jövendő,
+            egymást ölelik lágy hullámai.
+            A harcot, amelyet őseink vivtak,
+            békévé oldja az emlékezés
+            s rendezni végre közös dolgainkat,
+            ez a mi munkánk; és nem is kevés.`,
+        ],
+        [
+            "Gyermekké tettél",
+            `Gyermekké tettél. Hiába növesztett
+            harminc csikorgó télen át a kín.
+            Nem tudok járni s nem ülhetek veszteg.
+            Hozzád vonszolnak, löknek tagjaim.
+
+            Számban tartalak, mint kutya a kölykét
+            s menekülnék, hogy meg ne fojtsanak.
+            Az éveket, mik sorsom összetörték,
+            reám zudítja minden pillanat.
+
+            Etess, nézd – éhezem. Takarj be – fázom.
+            Ostoba vagyok – foglalkozz velem.
+            Hiányod átjár, mint huzat a házon.
+            Mondd, – távozzon tőlem a félelem.
+
+            Reám néztél s én mindent elejtettem.
+            Meghallgattál és elakadt szavam.
+            Tedd, hogy ne legyek ily kérlelhetetlen;
+            hogy tudjak élni, halni egymagam!
+
+            Anyám kivert – a küszöbön feküdtem –
+            magamba bujtam volna, nem lehet –
+            alattam kő és üresség fölöttem.
+            Óh, hogy alhatnék! Nálad zörgetek.
+
+            Sok ember él, ki érzéketlen, mint én,
+            kinek szeméből mégis könny ered.
+            Nagyon szeretlek, hisz magamat szintén
+            nagyon meg tudtam szeretni veled.`,
+        ],
+        [
+            "Tudod, hogy nincs bocsánat",
+            `Tudod, hogy nincs bocsánat,
+            hiába hát a bánat.
+            Légy, ami lennél: férfi.
+            A fű kinő utánad.
+
+            A bűn az nem lesz könnyebb,
+            hiába hull a könnyed.
+            Hogy bizonyság vagy erre,
+            legalább azt köszönjed.
+
+            Ne vádolj, ne fogadkozz,
+            ne légy komisz magadhoz,
+            ne hódolj és ne hódits,
+            ne csatlakozz a hadhoz.
+
+            Maradj fölöslegesnek,
+            a titkokat ne lesd meg.
+            S ezt az emberiséget,
+            hisz ember vagy, ne vesd meg.
+
+            Emlékezz, hogy hörögtél
+            s hiába könyörögtél.
+            Hamis tanúvá lettél
+            saját igaz pörödnél.
+
+            Atyát hivtál elesten,
+            embert, ha nincsen isten.
+            S romlott kölkökre leltél
+            pszichoanalizisben.
+
+            Hittél a könnyü szóknak,
+            fizetett pártfogóknak
+            s lásd, soha, soha senki
+            nem mondta, hogy te jó vagy.
+
+            Megcsaltak, úgy szerettek,
+            csaltál s igy nem szerethetsz.
+            Most hát a töltött fegyvert
+            szoritsd üres szivedhez.
+
+            Vagy vess el minden elvet
+            s még remélj hű szerelmet,
+            hisz mint a kutya hinnél
+            abban, ki bízna benned.`,
+        ],
+        [
+            "Karóval jöttél",
+            `Karóval jöttél, nem virággal,
+            feleseltél a másvilággal,
+            aranyat igértél nagy zsákkal
+            anyádnak és most itt csücsülsz,
+
+            mint fák tövén a bolondgomba
+            (igy van rád, akinek van, gondja),
+            be vagy zárva a Hét Toronyba
+            és már sohasem menekülsz.
+
+            Tejfoggal kőbe mért haraptál?
+            Mért siettél, ha elmaradtál?
+            Miért nem éjszaka álmodtál?
+            Végre mi kellett volna, mondd?
+
+            Magadat mindig kitakartad,
+            sebedet mindig elvakartad,
+            híres vagy, hogyha ezt akartad.
+            S hány hét a világ? Te bolond.
+
+            Szerettél? Magához ki fűzött?
+            Bujdokoltál? Vajjon ki űzött?
+            Győzd, ami volt, ha ugyan győzöd,
+            se késed nincs, se kenyered.
+
+            Be vagy a Hét Toronyba zárva,
+            örülj, ha jut tüzelőfára,
+            örülj, itt van egy puha párna,
+            hajtsd le szépen a fejedet.`,
+        ],
+    ];
+    const choices = versek.map(v =>
+        [
+            v[0],
+            v[1].split(/\n\n/).map(vsz =>
+                vsz.split(/\n/).map(sor =>
+                    sor.trimStart()
+                )
+            ),
+        ]
+    );
+    // console.log(choices);
+    function ridx(l) {
+        return Math.floor(Math.random() * l);
+    }
+    const versE = document.getElementById("vers");
+    const cimE = document.getElementById("cim");
+    const bE = document.getElementById("b");
+    let ans;
+    function front() {
+        cimE.style.opacity = 0;
+        const [cim, vszk] = choices[ridx(choices.length)];
+        ans = cim;
+        const vsz = vszk[ridx(vszk.length)];
+        let t;
+        if (vsz.length == 1) {
+            t = vsz[0];
+        } else {
+            const s = ridx(vsz.length - 1);
+            t = vsz[s] + "\n" + vsz[s + 1];
+        }
+        versE.innerText = t;
+        bE.innerText = "Cím";
+        bE.onclick = back;
+    }
+    front();
+    function back() {
+        cimE.style.opacity = 100;
+        cimE.innerText = ans;
+        bE.innerText = "Következő";
+        bE.onclick = front;
+    }
+</script>
